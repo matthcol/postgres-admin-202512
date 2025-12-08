@@ -35,3 +35,36 @@ Commandes psql:
 psql -U cinema -d dbcinema -f 01-tables.sql            # script 1 par 1
 psql -U cinema -d dbcinema -f 00b-import-tables.sql    # macro script
 ```
+
+## Congiguration
+
+Reload:
+- en interne (psql, pgadmin4):
+select pg_reload_conf();
+- via le service
+systemctl reload postgresql.service
+- via pg_ctl
+${env:PGDATA}='C:\Program Files\PostgreSQL\18\data'
+pg_ctl  reload
+
+pg_ctl -D "C:\Program Files\PostgreSQL\18\data" reload
+
+### Réseau
+Fichier postgresql.conf
+```
+listen_addresses = '*'  # default 'localhost'
+port = 5432
+```
+
+Check:
+- Linux
+```
+netstat -plantu | grep LISTEN
+ss - plantu | grep LISTEN
+```
+
+- Windows
+```
+netstat -ano | Select-String -Pattern LISTEN
+netstat -abn     # en admin pour voir le nom du processus
+```
